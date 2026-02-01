@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    networks:
+      - mon_net
+    ports:
+      - "9100:9100"
+    pid: "host"
+    restart: unless-stopped
+    command:
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'
+      - '/proc:/host/proc:ro'
+      - '/sys:/host/sys:ro'
+
+networks:
+  mon_net:
+    external: true
