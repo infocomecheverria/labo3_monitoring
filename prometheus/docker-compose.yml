@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    user: "root"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    environment:
+      - TZ=${TZ:-America/Argentina/Buenos_Aires}
+    networks:
+      - mon_net
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./data:/prometheus
+      # - ./files:/etc/prometheus/files:ro
+
+networks:
+  mon_net:
+    external: true
