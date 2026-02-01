@@ -17,7 +17,7 @@ services:
       - mon_net
     restart: unless-stopped
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./data:/prometheus
       # - ./files:/etc/prometheus/files:ro
 
